@@ -1,0 +1,45 @@
+services:
+  postgres:
+    image: postgres:18-alpine
+    container_name: dozen-postgres
+    restart: unless-stopped
+    ports:
+      - "5432:5432"
+    environment:
+      - POSTGRES_USER=dozen
+      - POSTGRES_PASSWORD=password
+      - POSTGRES_DB=dozen
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+    networks:
+      - dozen-network
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U dozen"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  redis:
+    image: redis:8-alpine
+    container_name: dozen-redis
+    restart: unless-stopped
+    ports:
+      - "6379:6379"
+    command: redis-server --appendonly yes
+    volumes:
+      - redis-data:/data
+    networks:
+      - dozen-network
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 10s
+      timeout: 3s
+      retries: 5
+
+networks:
+  dozen-network:
+    driver: bridge
+
+volumes:
+  postgres-data:
+  redis-data:

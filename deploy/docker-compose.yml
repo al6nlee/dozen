@@ -1,5 +1,3 @@
-version: '3.8'
-
 services:
   backend:
     build:
@@ -15,8 +13,8 @@ services:
       - DB_USER=dozen
       - DB_PASSWORD=password
       - DB_NAME=dozen
-    depends_on:
-      - postgres
+      - REDIS_HOST=redis
+      - REDIS_PORT=6379
     networks:
       - dozen-network
 
@@ -32,23 +30,6 @@ services:
     networks:
       - dozen-network
 
-  postgres:
-    image: postgres:15-alpine
-    container_name: dozen-postgres
-    ports:
-      - "5432:5432"
-    environment:
-      - POSTGRES_USER=dozen
-      - POSTGRES_PASSWORD=password
-      - POSTGRES_DB=dozen
-    volumes:
-      - postgres-data:/var/lib/postgresql/data
-    networks:
-      - dozen-network
-
 networks:
   dozen-network:
-    driver: bridge
-
-volumes:
-  postgres-data:
+    external: true
