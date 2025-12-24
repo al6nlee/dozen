@@ -1,0 +1,35 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: dozen-backend
+  labels:
+    app: dozen-backend
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: dozen-backend
+  template:
+    metadata:
+      labels:
+        app: dozen-backend
+    spec:
+      containers:
+      - name: backend
+        image: dozen-backend:latest
+        ports:
+        - containerPort: 8080
+        env:
+        - name: SERVER_PORT
+          value: "8080"
+        - name: DB_HOST
+          value: "postgres-service"
+        - name: DB_PORT
+          value: "5432"
+        resources:
+          limits:
+            cpu: "1"
+            memory: "512Mi"
+          requests:
+            cpu: "500m"
+            memory: "256Mi"

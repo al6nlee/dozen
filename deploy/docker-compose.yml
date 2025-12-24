@@ -1,0 +1,54 @@
+version: '3.8'
+
+services:
+  backend:
+    build:
+      context: ../backend
+      dockerfile: Dockerfile
+    container_name: dozen-backend
+    ports:
+      - "8080:8080"
+    environment:
+      - SERVER_PORT=8080
+      - DB_HOST=postgres
+      - DB_PORT=5432
+      - DB_USER=dozen
+      - DB_PASSWORD=password
+      - DB_NAME=dozen
+    depends_on:
+      - postgres
+    networks:
+      - dozen-network
+
+  frontend:
+    build:
+      context: ../frontend
+      dockerfile: Dockerfile
+    container_name: dozen-frontend
+    ports:
+      - "3000:80"
+    depends_on:
+      - backend
+    networks:
+      - dozen-network
+
+  postgres:
+    image: postgres:15-alpine
+    container_name: dozen-postgres
+    ports:
+      - "5432:5432"
+    environment:
+      - POSTGRES_USER=dozen
+      - POSTGRES_PASSWORD=password
+      - POSTGRES_DB=dozen
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+    networks:
+      - dozen-network
+
+networks:
+  dozen-network:
+    driver: bridge
+
+volumes:
+  postgres-data:
