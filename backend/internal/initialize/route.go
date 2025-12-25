@@ -2,13 +2,24 @@ package initialize
 
 import (
 	"dozen/backend/internal/middleware"
+	"dozen/backend/pkg/utils"
 	"net/http"
 
 	"github.com/gin-gonic/gin"
 )
 
+func registerAuthRouter(r *gin.RouterGroup) {
+	authRouter := r.Group("/auth")
+	{
+		authRouter.POST("/register", utils.NotImplemented)
+		authRouter.POST("/register/code", utils.NotImplemented)
+		authRouter.POST("/login", utils.NotImplemented)
+		authRouter.POST("/logout", utils.NotImplemented)
+	}
+}
+
 func registerRouters(r *gin.RouterGroup) {
-	// TODO: Register your routers here
+	registerAuthRouter(r)
 }
 
 func InitRouters() *gin.Engine {
