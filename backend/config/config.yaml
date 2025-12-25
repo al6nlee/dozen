@@ -1,0 +1,14 @@
+name: "DoZen"
+host: "0.0.0.0"
+port: 8080
+mode: "dev"
+postgres:
+  host: "localhost"
+  port: 5432
+  user: "dozen"
+  password: "password"
+  dbname: "dozen"
+redis:
+  host: "localhost"
+  port: 6379
+  password: ""

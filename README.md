@@ -12,14 +12,16 @@ dozen/
 │   ├── cmd/
 │   │   └── api/               # 主程序入口
 │   │       └── main.go
+│   ├── config/                # 配置管理
 │   ├── internal/              # 私有应用代码
+│   │   ├── global/            # 全局变量 
 │   │   ├── handler/           # HTTP handlers
 │   │   ├── service/           # 业务逻辑层
 │   │   ├── repository/        # 数据访问层
 │   │   ├── model/             # 数据模型
 │   │   ├── middleware/        # 中间件
 │   │   └── config/            # 配置管理
-│   ├── pkg/                   # 可复用的公共库
+│   ├── pkg/                   # 可复用的公共库(暂时不启用)
 │   │   ├── logger/
 │   │   ├── database/
 │   │   └── utils/
